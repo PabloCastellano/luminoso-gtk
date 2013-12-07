@@ -20,12 +20,13 @@
 
 from gi.repository import Gdk, Gtk
 
+import sys
 from gtkledsgrid import GtkLedsGrid
 
 
 class LuminosoGtk:
-    def __init__(self):
-        self.grid = GtkLedsGrid()
+    def __init__(self, filename=None):
+        self.grid = GtkLedsGrid(16, 64)
         self.ui = Gtk.Builder()
         self.ui.add_from_file('ui/mainwindow.glade')
         self.ui.connect_signals(self)
@@ -37,10 +38,16 @@ class LuminosoGtk:
         self.main_window = self.ui.get_object('mainwindow')
         self.main_window.show_all()
 
+        if filename:
+            self.grid.load_file(filename)
+
     def gtk_main_quit(self, widget, data=None):
         Gtk.main_quit()
 
 
 if __name__ == "__main__":
-    main = LuminosoGtk()
+    if len(sys.argv) == 2:
+        main = LuminosoGtk(sys.argv[1])
+    else:
+        main = LuminosoGtk()
     Gtk.main()
