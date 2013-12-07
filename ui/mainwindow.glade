@@ -5,6 +5,7 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Luminoso Monocolor (16x64)API1200</property>
     <property name="resizable">False</property>
+    <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
     <child>
       <object class="GtkBox" id="box1">
         <property name="visible">True</property>
@@ -156,6 +157,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">COM_1</property>
+                        <property name="use_underline">True</property>
                       </object>
                     </child>
                     <child>
@@ -178,14 +180,35 @@
           </packing>
         </child>
         <child>
-          <object class="GtkFixed" id="fixed1">
-            <property name="width_request">500</property>
-            <property name="height_request">200</property>
+          <object class="GtkAlignment" id="alignment6">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="top_padding">5</property>
+            <property name="bottom_padding">5</property>
+            <property name="left_padding">9</property>
+            <property name="right_padding">9</property>
+            <child>
+              <object class="GtkEventBox" id="eventbox1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkAlignment" id="alignment7">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="top_padding">3</property>
+                    <property name="bottom_padding">3</property>
+                    <property name="left_padding">3</property>
+                    <property name="right_padding">3</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
@@ -245,11 +268,11 @@
                                     <child>
                                       <object class="GtkEntry" id="entry1">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
+                                        <property name="can_focus">True</property>
                                         <property name="invisible_char">●</property>
                                         <property name="width_chars">6</property>
                                         <property name="text" translatable="yes">0</property>
-                                        <property name="invisible_char_set">True</property>
+                                        <property name="input_purpose">digits</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -274,10 +297,10 @@
                                     <child>
                                       <object class="GtkEntry" id="entry2">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
+                                        <property name="can_focus">True</property>
                                         <property name="invisible_char">●</property>
                                         <property name="width_chars">6</property>
-                                        <property name="invisible_char_set">True</property>
+                                        <property name="input_purpose">digits</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -301,11 +324,11 @@
                                     <child>
                                       <object class="GtkEntry" id="entry3">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
+                                        <property name="can_focus">True</property>
                                         <property name="editable">False</property>
                                         <property name="invisible_char">●</property>
                                         <property name="width_chars">6</property>
-                                        <property name="invisible_char_set">True</property>
+                                        <property name="input_purpose">digits</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -711,9 +734,6 @@
                                     <property name="height_request">100</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <child internal-child="selection">
-                                      <object class="GtkTreeSelection" id="treeview-selection"/>
-                                    </child>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
