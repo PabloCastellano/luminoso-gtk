@@ -1,4 +1,4 @@
 Luminoso-gtk es una reimplementación de un software para programar un panel de 16x64 leds.
 
-La versión con la que contábamos solo funciona bajo una versión antigua de Windows.
-Esta versión está desarrollada bajo licencia GPLv3 y usando la librería gráfica GTK sobre Python.
+La versión con la que contábamos solo funciona bajo una versión antigua de Windows y no disponíamos de su código fuente.
+En cambio esta versión está desarrollada bajo licencia GPLv3 y usando la librería gráfica GTK+ sobre Python.
