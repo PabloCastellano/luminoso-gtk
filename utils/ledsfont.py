@@ -18,12 +18,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from pprint import pprint
+
+
 # c = content[0:2]  # ascii  Ñ = 0xD1, ñ = 0xF1 | hex(ord(u'Ñ'))
 class LedFont:
-    def __init__(self):
+    def __init__(self, filename=None):
         self.dict = {}
+        if filename:
+            self.load(filename)
 
     def load(self, filename):
+        self.dict.clear()
         with open(filename, 'rb') as fp:
             content = fp.read()
 
@@ -33,13 +39,15 @@ class LedFont:
         i = content.find('\x00\x00')
         while i != -1:
             c = content[0:1]
-            self.dict[c] = content[2:]
+            self.dict[c] = content[2:i]
             content = content[9:]  # 2 char + 5 repr + 2 blank
             i = content.find('\x00\x00')
 
         print sorted(self.dict.keys())
+        pprint(self.dict)
 
     def load2(self, filename):
+        self.dict.clear()
         with open(filename, 'rb') as fp:
             content = fp.read()
 
@@ -49,11 +57,12 @@ class LedFont:
         i = content.find('\x00\x00')
         while i != -1:
             c = content[0:1]
-            self.dict[c] = content[2:]
+            self.dict[c] = content[2:i]
             content = content[i + 2:]
             i = content.find('\x00\x00')
 
         print sorted(self.dict.keys())
+        pprint(self.dict)
 
 
 if __name__ == '__main__':

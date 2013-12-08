@@ -56,7 +56,38 @@ class GtkLedsGrid(Gtk.EventBox):
                 self._bytes_to_leds(fp.read())
             except KeyError:
                 print 'Error cargando el archivo. Es más grande de lo esperado.'
-                print "Su visualización puede contener errores.'
+                print 'Su visualización puede contener errores.'
+
+    def set_led(self, x, y, value):
+        self.leds.set_value(x, y, value)
+
+    def clear(self, rows_begin=0, rows_end=0, columns_begin=0, columns_end=0):
+        for x in range(columns_begin, columns_end):
+            for y in range(rows_begin, rows_end):
+                self.leds.set_value(x, y, 0)
+
+    def clear_all(self):
+        for x in range(self.columns):
+            for y in range(self.rows):
+                self.leds.set_value(x, y, 0)
+
+    def paint_bytes(self, content, blanklines=2, topborder=4, bottomborder=4):
+        n = 0
+
+        #for b in range(self.rows * blanklines):
+        n += self.rows * blanklines
+
+        for ledbyte in content:
+            ledbyte = ord(ledbyte)
+            #for b in range(topborder):
+            #    self.leds.set_value(n / self.rows, n % self.rows, 0)
+            #    n += 1
+            n += topborder
+            for b in range(7, -1, -1):
+                value = ledbyte >> b & 1
+                self.leds.set_value(n / self.rows, n % self.rows, value)
+                n += 1
+            n += bottomborder
 
     def _bytes_to_leds(self, content):
         n = 0
