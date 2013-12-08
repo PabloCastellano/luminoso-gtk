@@ -23,13 +23,21 @@ from gi.repository import Gdk
 
 
 # It creates a matrix using GtkEventBox + GtkFixed widgets
-class GtkLedsGrid(Gtk.Grid):
+# TODO: Think about something more efficient
+class GtkLedsGrid(Gtk.EventBox):
     def __init__(self, rows, columns):
-        Gtk.Grid.__init__(self)
+        Gtk.EventBox.__init__(self)
+        self.modify_bg(Gtk.StateType.NORMAL, Gdk.Color.parse("black")[1])
+        alignment = Gtk.Alignment()
+        alignment.set_padding(3, 3, 3, 3)
+        self.add(alignment)
+        self.grid = Gtk.Grid()
+        self.grid.set_row_spacing(6)
+        self.grid.set_column_spacing(6)
+        alignment.add(self.grid)
+
         self.rows = rows
         self.columns = columns
-        self.set_row_spacing(6)
-        self.set_column_spacing(6)
         self.leds = LedsArray(rows, columns)
         self.init_leds()
 
@@ -38,13 +46,17 @@ class GtkLedsGrid(Gtk.Grid):
         for x in range(self.columns):
             for y in range(self.rows):
                 l = self._create_led()
-                self.attach(l, x, y, 1, 1)
+                self.grid.attach(l, x, y, 1, 1)
                 self.leds.set_led(x, y, 0, l)
 
     # Load .iat files
     def load_file(self, filename):
         with open(filename, 'rb') as fp:
-            self._bytes_to_leds(fp.read())
+            try:
+                self._bytes_to_leds(fp.read())
+            except KeyError:
+                print 'Error cargando el archivo. Es más grande de lo esperado.'
+                print "Su visualización puede contener errores.'
 
     def _bytes_to_leds(self, content):
         n = 0
